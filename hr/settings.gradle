@@ -1,0 +1,3 @@
+rootProject.name = 'humanresources'
+include 'buildingblocks'
+project(':buildingblocks').projectDir = new File(settingsDir, '../buildingblocks')

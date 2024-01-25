@@ -1,0 +1,21 @@
+services:
+  db:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=kwops.hr'
+      - 'MYSQL_ROOT_PASSWORD=secret'
+      - 'MYSQL_USER=kwops'
+      - 'MYSQL_PASSWORD=SuperS3cr3tP4ssw0rd!'
+    restart: always
+
+  backend:
+    image: ${DOCKER_REGISTRY-}kwops.hr
+    build:
+        context: .
+        dockerfile: hr/Dockerfile
+    container_name: "kwops.hr"
+    depends_on:
+      - db
+    restart: always
+    ports:
+        - "8081:8080"
