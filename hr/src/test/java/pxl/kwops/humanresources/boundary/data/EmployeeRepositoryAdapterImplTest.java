@@ -1,5 +1,6 @@
 package pxl.kwops.humanresources.boundary.data;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,24 +14,24 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 class EmployeeRepositoryAdapterImplTest {
 
     public static final String NUMBER = "20240101001";
     public static final EmployeeNumber EMPLOYEE_NUMBER = new EmployeeNumber(NUMBER);
-    public static final Employee EMPLOYEE = Employee.builder()
+    private static final Employee EMPLOYEE = Employee.builder()
             .number(EMPLOYEE_NUMBER)
             .firstName("John")
             .lastName("Doe")
             .build();
-    public static final EmployeeEntity EMPLOYEE_ENTITY = EmployeeEntity.builder()
+    private static final EmployeeEntity EMPLOYEE_ENTITY = EmployeeEntity.builder()
             .id(1L)
             .firstName("John")
             .lastName("Doe")
             .build();
+    private AutoCloseable closeable;
     @Mock
     private EmployeeJpaRepository employeeJpaRepository;
     @Mock
@@ -40,7 +41,12 @@ class EmployeeRepositoryAdapterImplTest {
 
     @BeforeEach
     void setUp() {
-        initMocks(this);
+        closeable = openMocks(this);
+    }
+
+    @AfterEach
+    void tearDown() throws Exception {
+        closeable.close();
     }
 
     @Test
@@ -102,4 +108,5 @@ class EmployeeRepositoryAdapterImplTest {
 
         verify(employeeJpaRepository).flush();
     }
+
 }

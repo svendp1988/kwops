@@ -11,6 +11,8 @@ import pxl.kwops.humanresources.boundary.data.EmployeeRepositoryAdapterImpl;
 import pxl.kwops.humanresources.business.EmployeeRepositoryAdapter;
 import pxl.kwops.humanresources.business.EmployeeService;
 import pxl.kwops.humanresources.business.EmployeeServiceImpl;
+import pxl.kwops.message.EmployeeHiredMessage;
+import pxl.kwops.message.MessageSender;
 
 @Configuration
 public class HumanResourcesConfiguration {
@@ -35,8 +37,8 @@ public class HumanResourcesConfiguration {
     }
 
     @Bean
-    public EmployeeService employeeService(EmployeeRepositoryAdapter employeeRepositoryAdapter) {
-        return new EmployeeServiceImpl(employeeRepositoryAdapter);
+    public EmployeeService employeeService(EmployeeRepositoryAdapter employeeRepositoryAdapter, MessageSender<EmployeeHiredMessage> messageSender) {
+        return new EmployeeServiceImpl(employeeRepositoryAdapter, messageSender);
     }
 
 }

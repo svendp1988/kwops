@@ -25,7 +25,6 @@ public class RandomExtensions {
 
     /**
      * Returns a zero or negative integer.
-     *
      */
     public static int nextZeroOrNegative() {
         return -1 * random.nextInt(-exclusiveMinimum - 1);
@@ -36,6 +35,15 @@ public class RandomExtensions {
      */
     public static boolean nextBool() {
         return random.nextBoolean();
+    }
+
+
+    public static double nextDouble() {
+        return random.nextDouble();
+    }
+
+    public static UUID nextUUID() {
+        return UUID.randomUUID();
     }
 
     /**
