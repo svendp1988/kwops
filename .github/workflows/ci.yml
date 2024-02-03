@@ -15,5 +15,7 @@ jobs:
         run: gradle build
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4.0.1
+        with:
+          files: build/reports/jacoco/testCodeCoverageReport/testCodeCoverageReport.xml
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_ORG_TOKEN }}
