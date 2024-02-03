@@ -5,10 +5,6 @@ plugins {
 group = "pxl.kwops"
 version = "0.0.1-SNAPSHOT"
 
-bootJar {
-    enabled = false
-}
-
 jar {
     enabled = true
 }
@@ -25,3 +21,5 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+
