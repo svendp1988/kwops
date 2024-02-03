@@ -5,8 +5,10 @@ import pxl.kwops.domain.models.Contracts;
 import pxl.kwops.domain.models.ValueObject;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 @Getter
 public class Percentage extends ValueObject {
@@ -25,7 +27,7 @@ public class Percentage extends ValueObject {
 
     @Override
     public String toString() {
-        NumberFormat percentageFormat = new DecimalFormat("0.##%");
+        NumberFormat percentageFormat = new DecimalFormat("0.##%", DecimalFormatSymbols.getInstance(Locale.GERMAN));
         return percentageFormat.format(value);
     }
 
