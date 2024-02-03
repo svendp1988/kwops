@@ -1,4 +1,4 @@
-name: Workflow for Codecov example-java-maven
+name: Workflow to build, test, and upload coverage to Codecov
 on: [push, pull_request]
 jobs:
   run:

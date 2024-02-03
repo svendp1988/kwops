@@ -15,12 +15,13 @@ import pxl.kwops.humanresources.boundary.models.EmployeeCreateDto;
 import pxl.kwops.humanresources.business.EmployeeRepositoryAdapter;
 import pxl.kwops.humanresources.domain.Employee;
 import pxl.kwops.humanresources.domain.EmployeeNumber;
+import pxl.kwops.message.EmployeeHiredMessage;
+import pxl.kwops.message.MessageSender;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -36,6 +37,9 @@ class EmployeeControllerIT {
 
     @MockBean
     private EmployeeRepositoryAdapter employeeRepositoryAdapterMock;
+
+    @MockBean
+    private MessageSender<EmployeeHiredMessage> messageSenderMock;
 
     @Autowired
     private MockMvc mockMvc;
@@ -113,6 +117,7 @@ class EmployeeControllerIT {
                 .andExpect(redirectedUrlPattern("*://*/api/employees/" + id));
 
         verify(employeeRepositoryAdapterMock).addEmployee(any(Employee.class));
+        verify(messageSenderMock).sendMessage(any(EmployeeHiredMessage.class));
     }
 
     @Test

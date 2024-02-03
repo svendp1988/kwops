@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pxl.kwops.humanresources.domain.Employee;
 import pxl.kwops.humanresources.domain.EmployeeNumber;
+import pxl.kwops.message.EmployeeHiredMessage;
+import pxl.kwops.message.MessageSender;
 import pxl.kwops.test.RandomExtensions;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,12 +18,14 @@ import java.util.Optional;
 public class EmployeeServiceImplTest {
 
     private EmployeeRepositoryAdapter employeeRepositoryAdapterMock;
+    private MessageSender<EmployeeHiredMessage> messageSenderMock;
     private EmployeeService service;
 
     @BeforeEach
     public void setUp() {
         employeeRepositoryAdapterMock = mock(EmployeeRepositoryAdapter.class);
-        service = new EmployeeServiceImpl(employeeRepositoryAdapterMock);
+        messageSenderMock = mock(MessageSender.class);
+        service = new EmployeeServiceImpl(employeeRepositoryAdapterMock, messageSenderMock);
     }
 
     @Test
@@ -53,7 +57,7 @@ public class EmployeeServiceImplTest {
     }
 
     @Test
-    public void dismissAsyncShouldRetrieveEmployeeFromRepositoryDismissTheEmployeeAndSaveTheChanges() throws Exception {
+    public void dismissAsyncShouldRetrieveEmployeeFromRepositoryDismissTheEmployeeAndSaveTheChanges() {
         // Arrange
         var employeeNumber = new EmployeeNumber(LocalDate.now(), 1);
         var employeeToDismiss = mock(Employee.class);
