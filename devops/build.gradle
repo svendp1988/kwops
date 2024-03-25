@@ -1,44 +1,84 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '3.2.1'
-    id 'io.spring.dependency-management' version '1.1.4'
-    id "io.freefair.lombok" version "8.4"
+    id "java"
+    id "org.springframework.boot"
+    id "io.spring.dependency-management"
+    id "io.freefair.lombok"
     id "jacoco"
+    id "org.openapi.generator"
+    id "idea"
 }
 
-group = 'pxl.kwops'
-version = '0.0.1-SNAPSHOT'
+apply from: "$rootDir/dependencies.gradle"
 
-java {
-    sourceCompatibility = '21'
-}
 
-repositories {
-    mavenCentral()
+dependencyManagement {
+    imports {
+        "org.openapitools.generator:openapi-generator-gradle-plugin:${versions.openapi_generator}"
+    }
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-amqp"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
 
-    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-    implementation 'org.projectlombok:lombok:1.18.20'
+    implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
+    implementation "org.projectlombok:lombok:${versions.lombok}"
+
+    implementation "io.swagger.core.v3:swagger-annotations:${versions.swagger_annotations}"
+    implementation "org.openapitools:jackson-databind-nullable:${versions.jackson_databind_nullable}"
 
     implementation project(":buildingblocks")
 
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
-    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${versions.lombok_mapstruct_binding}"
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.amqp:spring-rabbit-test'
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.amqp:spring-rabbit-test"
 
-    runtimeOnly 'com.h2database:h2'
+    runtimeOnly "com.h2database:h2"
 
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly "com.mysql:mysql-connector-j"
 }
 
-tasks.named('test') {
+tasks.named("test") {
     useJUnitPlatform()
+}
+
+task openAPIGenerateSpringServerCode(type: GenerateTask) {
+    inputSpec = "$projectDir/src/main/openapi/devops-openapi.yaml"
+    generatorName = "spring"
+    library = "spring-boot"
+    outputDir = "$buildDir/openapi"
+    groupId = "$project.group"
+    id = "$project.name-java-server"
+    version = "$project.version"
+    apiPackage = "pxl.kwops.devops.api"
+    modelPackage = "pxl.kwops.devops.api.model"
+    enablePostProcessFile = true
+    skipOperationExample = true
+    skipOverwrite = false
+    configOptions = [
+            configPackage          : "pxl.kwops.devops.config",
+            generateSupportingFiles: "false",
+            interfaceOnly          : "true",
+            serializableModel      : "true",
+            serializationLibrary   : "jackson",
+            sourceFolder           : "../mainGenerated/java",
+            useBeanValidation      : "true",
+            useTags                : "true",
+            useJakartaEe           : "true"
+    ]
+}
+
+compileJava.dependsOn(openAPIGenerateSpringServerCode)
+
+sourceSets {
+    main {
+        java.srcDirs += "$buildDir/mainGenerated/java"
+    }
 }

@@ -1,10 +1,9 @@
 package pxl.kwops.devops.boundary.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Setter
@@ -20,5 +19,7 @@ public class TeamEntity {
     @Generated
     private UUID id;
     private String name;
+    @OneToMany(mappedBy = "teamId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<DeveloperEntity> developers;
 
 }

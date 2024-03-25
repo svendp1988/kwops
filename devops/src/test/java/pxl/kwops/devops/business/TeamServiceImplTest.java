@@ -22,6 +22,9 @@ public class TeamServiceImplTest {
     @Mock
     private DeveloperRepositoryAdapter developerRepositoryAdapterMock;
 
+    @Mock
+    private TeamRepositoryAdapter teamRepositoryAdapterMock;
+
     @InjectMocks
     private TeamServiceImpl service;
 
@@ -46,9 +49,10 @@ public class TeamServiceImplTest {
         }
 
         when(developerRepositoryAdapterMock.findDevelopersWithoutATeam()).thenReturn(freeDevelopers);
+        when(teamRepositoryAdapterMock.findById(team.getId().toString())).thenReturn(java.util.Optional.of(team));
 
         // Act
-        service.assembleDevelopersFor(team, requiredNumberOfDevelopers);
+        service.assembleDevelopersFor(team.getId().toString(), requiredNumberOfDevelopers);
 
         // Assert
         verify(developerRepositoryAdapterMock, times(1)).findDevelopersWithoutATeam();
@@ -72,9 +76,10 @@ public class TeamServiceImplTest {
         }
 
         when(developerRepositoryAdapterMock.findDevelopersWithoutATeam()).thenReturn(freeDevelopers);
+        when(teamRepositoryAdapterMock.findById(team.getId().toString())).thenReturn(java.util.Optional.of(team));
 
         // Act
-        service.assembleDevelopersFor(team, requiredNumberOfDevelopers);
+        service.assembleDevelopersFor(team.getId().toString(), requiredNumberOfDevelopers);
 
         // Assert
         verify(developerRepositoryAdapterMock, times(1)).findDevelopersWithoutATeam();

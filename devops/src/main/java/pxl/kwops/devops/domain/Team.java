@@ -20,9 +20,9 @@ public class Team extends Entity {
     private Team(UUID id, String name, List<Developer> developers) {
         Contracts.require(!isNullOrEmpty(name), "A name must be provided when creating a new team.");
 
-        this.id = generateNonEmptyUUID();
+        this.id = id == null ? generateNonEmptyUUID() : id;
         this.name = name;
-        this.developers = new ArrayList<>();
+        this.developers = developers == null ? new ArrayList<>() : developers;
     }
 
     public void join(Developer developer) {

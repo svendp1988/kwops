@@ -1,0 +1,13 @@
+ext {
+    versions = [
+            group                    : 'pxl.kwops',
+            jackson_databind_nullable: '0.2.6',
+            java                     : '21',
+            lombok                   : '1.18.20',
+            lombok_mapstruct_binding : '0.2.0',
+            mapstruct                : '1.5.5.Final',
+            openapi_generator        : '6.6.0',
+            swagger_annotations      : '2.2.8',
+            version                  : '0.0.1-SNAPSHOT'
+    ]
+}

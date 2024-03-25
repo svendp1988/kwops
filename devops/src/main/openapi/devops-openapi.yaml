@@ -1,0 +1,71 @@
+openapi: "3.0.3"
+info:
+  title: "kwops API"
+  description: "kwops API"
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:8082/api"
+paths:
+  /teams:
+    get:
+      tags:
+        - team-controller
+      summary: "GET teams"
+      operationId: "getAll"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/TeamDetailsDto"
+  /teams/assemble:
+    post:
+      tags:
+        - team-controller
+      summary: "POST teams/assemble"
+      operationId: "assembleDevelopersForTeam"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TeamAssembleInputDto"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+components:
+  schemas:
+    DeveloperDetailsDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        firstName:
+          type: "string"
+        lastName:
+          type: "string"
+        rating:
+          type: "number"
+          format: "double"
+    TeamDetailsDto:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+        name:
+          type: "string"
+        developers:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/DeveloperDetailsDto"
+    TeamAssembleInputDto:
+      type: "object"
+      properties:
+        teamId:
+          type: "string"
+        requiredNumberOfDevelopers:
+          type: "integer"
+          format: "int32"

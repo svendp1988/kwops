@@ -1,44 +1,33 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '3.2.1'
-    id 'io.spring.dependency-management' version '1.1.4'
-    id "io.freefair.lombok" version "8.4"
+    id "java"
+    id "org.springframework.boot"
+    id "io.spring.dependency-management"
+    id "io.freefair.lombok"
     id "jacoco"
 }
 
-group = 'pxl.kwops'
-version = '0.0.1-SNAPSHOT'
-
-java {
-    sourceCompatibility = '21'
-}
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-amqp"
 
-    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-    implementation 'org.projectlombok:lombok:1.18.20'
+    implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
+    implementation "org.projectlombok:lombok:${versions.lombok}"
 
     implementation project(":buildingblocks")
 
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
-    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${versions.lombok_mapstruct_binding}"
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.amqp:spring-rabbit-test'
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.amqp:spring-rabbit-test"
 
-    runtimeOnly 'com.h2database:h2'
+    runtimeOnly "com.h2database:h2"
 
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly "com.mysql:mysql-connector-j"
 }
 
-tasks.named('test') {
+tasks.named("test") {
     useJUnitPlatform()
 }

@@ -7,8 +7,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import pxl.kwops.devops.boundary.DeveloperMapper;
 import pxl.kwops.devops.boundary.DeveloperMapperImpl;
-import pxl.kwops.devops.boundary.TeamMapper;
-import pxl.kwops.devops.boundary.TeamMapperImpl;
 import pxl.kwops.devops.boundary.models.DeveloperEntity;
 import pxl.kwops.devops.boundary.models.TeamEntity;
 import pxl.kwops.devops.domain.Developer;
@@ -18,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DataJpaTest
 class DeveloperRepositoryAdapterImplIT {
@@ -28,7 +26,6 @@ class DeveloperRepositoryAdapterImplIT {
     private DeveloperEntity developerWithTeam;
     private DeveloperEntity developerWithoutTeam;
     private final DeveloperMapper developerMapper = new DeveloperMapperImpl();
-    private final TeamMapper teamMapper = new TeamMapperImpl();
     private DeveloperRepositoryAdapterImpl developerRepositoryAdapter;
 
     @SpyBean
@@ -99,18 +96,17 @@ class DeveloperRepositoryAdapterImplIT {
 
     @Test
     void updateDevelopersTeamId() {
-        var teamId = UUID.randomUUID();
         var developer = Developer.builder()
                 .id(String.valueOf(developerWithoutTeam.getId()))
                 .firstName(developerWithoutTeam.getFirstName())
                 .lastName(developerWithoutTeam.getLastName())
                 .rating(new Percentage(developerWithoutTeam.getRating()))
-                .teamId(teamId)
                 .build();
 
-        developerRepositoryAdapter.updateDevelopersTeamId(List.of(developer), String.valueOf(teamId));
+        developerRepositoryAdapter.updateDevelopersTeamId(List.of(developer), String.valueOf(team.getId()));
 
         assertThat(developerJpaRepository.findByTeamIdIsNull()).hasSize(0);
+        assertThat(teamJpaRepository.count()).isEqualTo(1);
     }
 
 }
