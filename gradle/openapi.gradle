@@ -1,0 +1,42 @@
+apply plugin: "org.openapi.generator"
+
+dependencies {
+
+    implementation "io.swagger.core.v3:swagger-annotations:${versions.swagger_annotations}"
+    implementation "org.openapitools:jackson-databind-nullable:${versions.jackson_databind_nullable}"
+
+}
+
+tasks.openApiGenerate {
+    inputSpec = "$projectDir/src/main/openapi/devops-openapi.yaml"
+    generatorName = "spring"
+    library = "spring-boot"
+    outputDir = "$buildDir/openapi"
+    groupId = "$project.group"
+    id = "$project.name-java-server"
+    version = "$project.version"
+    apiPackage = "pxl.kwops.devops.api"
+    modelPackage = "pxl.kwops.devops.api.model"
+    enablePostProcessFile = true
+    skipOperationExample = true
+    skipOverwrite = false
+    configOptions = [
+            configPackage          : "pxl.kwops.devops.config",
+            generateSupportingFiles: "false",
+            interfaceOnly          : "true",
+            serializableModel      : "true",
+            serializationLibrary   : "jackson",
+            sourceFolder           : "../mainGenerated/java",
+            useBeanValidation      : "true",
+            useTags                : "true",
+            useJakartaEe           : "true"
+    ]
+}
+
+compileJava.dependsOn("openApiGenerate")
+
+sourceSets {
+    main {
+        java.srcDirs += "$buildDir/mainGenerated/java"
+    }
+}

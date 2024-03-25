@@ -62,10 +62,6 @@ subprojects {
 
 }
 
-//tasks.named("test") {
-//    useJUnitPlatform()
-//}
-
 dependencies {
     jacocoAggregation project(":hr")
     jacocoAggregation project(":devops")

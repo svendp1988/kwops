@@ -1,23 +1,14 @@
-import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
-
 plugins {
     id "java"
     id "org.springframework.boot"
     id "io.spring.dependency-management"
     id "io.freefair.lombok"
     id "jacoco"
-    id "org.openapi.generator"
     id "idea"
 }
 
 apply from: "$rootDir/dependencies.gradle"
-
-
-dependencyManagement {
-    imports {
-        "org.openapitools.generator:openapi-generator-gradle-plugin:${versions.openapi_generator}"
-    }
-}
+apply from: "$rootDir/gradle/openapi.gradle"
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter"
@@ -28,9 +19,6 @@ dependencies {
 
     implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
     implementation "org.projectlombok:lombok:${versions.lombok}"
-
-    implementation "io.swagger.core.v3:swagger-annotations:${versions.swagger_annotations}"
-    implementation "org.openapitools:jackson-databind-nullable:${versions.jackson_databind_nullable}"
 
     implementation project(":buildingblocks")
 
@@ -47,38 +35,4 @@ dependencies {
 
 tasks.named("test") {
     useJUnitPlatform()
-}
-
-task openAPIGenerateSpringServerCode(type: GenerateTask) {
-    inputSpec = "$projectDir/src/main/openapi/devops-openapi.yaml"
-    generatorName = "spring"
-    library = "spring-boot"
-    outputDir = "$buildDir/openapi"
-    groupId = "$project.group"
-    id = "$project.name-java-server"
-    version = "$project.version"
-    apiPackage = "pxl.kwops.devops.api"
-    modelPackage = "pxl.kwops.devops.api.model"
-    enablePostProcessFile = true
-    skipOperationExample = true
-    skipOverwrite = false
-    configOptions = [
-            configPackage          : "pxl.kwops.devops.config",
-            generateSupportingFiles: "false",
-            interfaceOnly          : "true",
-            serializableModel      : "true",
-            serializationLibrary   : "jackson",
-            sourceFolder           : "../mainGenerated/java",
-            useBeanValidation      : "true",
-            useTags                : "true",
-            useJakartaEe           : "true"
-    ]
-}
-
-compileJava.dependsOn(openAPIGenerateSpringServerCode)
-
-sourceSets {
-    main {
-        java.srcDirs += "$buildDir/mainGenerated/java"
-    }
 }
