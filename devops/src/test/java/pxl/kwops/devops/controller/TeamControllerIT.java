@@ -44,6 +44,7 @@ class TeamControllerIT {
     @Autowired
     private ObjectMapper objectMapper;
 
+
     @Test
     void getAll_noneFound() throws Exception {
         mockMvc.perform(get("/api/teams").contextPath(CONTEXT_PATH)
