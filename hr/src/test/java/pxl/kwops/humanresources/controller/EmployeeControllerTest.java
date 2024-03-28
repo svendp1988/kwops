@@ -1,4 +1,4 @@
-package pxl.kwops.humanresources.api;
+package pxl.kwops.humanresources.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +10,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import pxl.kwops.humanresources.boundary.models.EmployeeCreateDto;
-import pxl.kwops.humanresources.boundary.models.EmployeeDetailsDto;
+import pxl.kwops.humanresources.api.model.EmployeeCreateDto;
+import pxl.kwops.humanresources.api.model.EmployeeDetailsDto;
 import pxl.kwops.humanresources.boundary.EmployeeMapper;
 import pxl.kwops.humanresources.business.EmployeeService;
 import pxl.kwops.humanresources.domain.Employee;
@@ -44,9 +44,9 @@ public class EmployeeControllerTest {
     void addShouldUseServiceAndReturnLocation() {
         // Arrange
         var inputModel = EmployeeCreateDto.builder()
-                .withFirstName("John")
-                .withLastName("Doe")
-                .withStartDate(LocalDate.now())
+                .firstName("John")
+                .lastName("Doe")
+                .startDate(LocalDate.now())
                 .build();
 
         var hiredEmployee = mock(Employee.class);

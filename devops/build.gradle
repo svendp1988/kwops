@@ -7,7 +7,6 @@ plugins {
     id "idea"
 }
 
-apply from: "$rootDir/dependencies.gradle"
 apply from: "$rootDir/gradle/openapi.gradle"
 
 dependencies {

@@ -1,65 +1,30 @@
 plugins {
-    id "java"
-    id "org.springframework.boot" version "3.2.1"
-    id "io.spring.dependency-management" version "1.1.4"
-    id "jacoco-report-aggregation"
     id "idea"
     id "io.freefair.lombok" version "8.4"
+    id "io.spring.dependency-management" version "1.1.4"
+    id "jacoco-report-aggregation"
+    id "java"
     id "org.openapi.generator" version "6.6.0"
-}
-
-apply from: "dependencies.gradle"
-
-group = "${versions.group}"
-version = "${versions.version}"
-
-java {
-    sourceCompatibility = "${versions.java}"
-}
-
-repositories {
-    mavenCentral()
+    id "org.springframework.boot" version "3.2.1"
 }
 
 bootJar {
     enabled = false
 }
 
-dependencies {
-    implementation "org.springframework.boot:spring-boot-starter"
-    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
-    implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation "org.springframework.boot:spring-boot-starter-amqp"
-
-    implementation "org.mapstruct:mapstruct:1.5.5.Final"
-    implementation "org.projectlombok:lombok:1.18.20"
-
-    annotationProcessor "org.mapstruct:mapstruct-processor:1.5.5.Final"
-    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
-
-    testImplementation "org.springframework.boot:spring-boot-starter-test"
-    testImplementation "org.springframework.amqp:spring-rabbit-test"
-
-    testRuntimeOnly "com.h2database:h2"
-
-    runtimeOnly "com.mysql:mysql-connector-j"
-
-}
-
-subprojects {
-
+allprojects {
+    apply from: "$rootDir/dependencies.gradle"
     repositories {
         mavenCentral()
     }
-
     group = "${versions.group}"
     version = "${versions.version}"
+}
 
-
+subprojects {
     java {
         sourceCompatibility = "${versions.java}"
     }
-
 }
 
 dependencies {

@@ -1,4 +1,4 @@
-package pxl.kwops.humanresources.api.exceptions;
+package pxl.kwops.humanresources.controller.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

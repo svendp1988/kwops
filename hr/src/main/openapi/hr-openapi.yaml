@@ -1,0 +1,99 @@
+openapi: "3.0.3"
+info:
+  title: "kwops API"
+  description: "kwops API"
+  version: "1.0.0"
+servers:
+  - url: "http://localhost:8083/api"
+paths:
+  /employees/{number}:
+    get:
+      tags:
+        - employee-controller
+      summary: "GET employees/{number}"
+      operationId: "getByNumber"
+      parameters:
+        - name: "number"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeDetailsDto"
+  /employees:
+    post:
+      tags:
+        - employee-controller
+      summary: "POST employees"
+      operationId: "add"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmployeeCreateDto"
+        required: true
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              description: URI of the created resource
+              schema:
+                type: string
+                format: uri
+  /employees/{number}/dismiss:
+    post:
+      tags:
+        - employee-controller
+      summary: "POST employees/{number}/dismiss"
+      operationId: "dismiss"
+      parameters:
+        - name: "number"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+        - name: "withNotice"
+          in: "query"
+          required: false
+          schema:
+            type: "boolean"
+            default: "true"
+      responses:
+        "200":
+          description: "OK"
+components:
+  schemas:
+    EmployeeDetailsDto:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        number:
+          type: "string"
+        lastName:
+          type: "string"
+        firstName:
+          type: "string"
+        startDate:
+          type: "string"
+          format: "date"
+        endDate:
+          type: "string"
+          format: "date"
+    EmployeeCreateDto:
+      type: "object"
+      properties:
+        lastName:
+          type: "string"
+        firstName:
+          type: "string"
+        startDate:
+          type: "string"
+          format: "date"

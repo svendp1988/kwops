@@ -1,4 +1,0 @@
-rootProject.name = 'devops'
-
-include 'buildingblocks'
-project(':buildingblocks').projectDir = new File(settingsDir, '../buildingblocks')

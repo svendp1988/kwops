@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
-import pxl.kwops.humanresources.boundary.models.EmployeeDetailsDto;
+import pxl.kwops.humanresources.api.model.EmployeeDetailsDto;
 import pxl.kwops.humanresources.boundary.models.EmployeeEntity;
 import pxl.kwops.humanresources.domain.Employee;
 import pxl.kwops.humanresources.domain.EmployeeNumber;

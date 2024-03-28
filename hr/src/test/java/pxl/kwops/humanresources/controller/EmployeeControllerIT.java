@@ -1,4 +1,4 @@
-package pxl.kwops.humanresources.api;
+package pxl.kwops.humanresources.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;

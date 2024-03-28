@@ -1,11 +1,12 @@
-package pxl.kwops.humanresources.api;
+package pxl.kwops.humanresources.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import pxl.kwops.humanresources.boundary.models.EmployeeCreateDto;
-import pxl.kwops.humanresources.boundary.models.EmployeeDetailsDto;
+import pxl.kwops.humanresources.api.model.EmployeeCreateDto;
+import pxl.kwops.humanresources.api.model.EmployeeDetailsDto;
+import pxl.kwops.humanresources.api.EmployeeControllerApi;
 import pxl.kwops.humanresources.boundary.EmployeeMapper;
 import pxl.kwops.humanresources.business.EmployeeService;
 
@@ -15,7 +16,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/employees")
-public class EmployeeController {
+public class EmployeeController implements EmployeeControllerApi {
 
     private final EmployeeService employeeService;
     private final EmployeeMapper employeeMapper;
@@ -28,7 +29,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> add(@RequestBody EmployeeCreateDto model) {
+    public ResponseEntity<Void> add(@RequestBody EmployeeCreateDto model) {
         var hiredEmployee = employeeService.hireNewEmployee(model.getLastName(), model.getFirstName(), model.getStartDate());
 
         return ResponseEntity.created(
