@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import pxl.kwops.api.models.ErrorModel;
 import pxl.kwops.domain.exceptions.ContractException;
-import pxl.kwops.humanresources.boundary.models.EmployeeCreateDto;
+import pxl.kwops.humanresources.api.model.EmployeeCreateDto;
 import pxl.kwops.humanresources.business.EmployeeRepositoryAdapter;
 import pxl.kwops.humanresources.domain.Employee;
 import pxl.kwops.humanresources.domain.EmployeeNumber;
@@ -104,9 +104,9 @@ class EmployeeControllerIT {
                         .endDate(null)
                         .build());
         var employeeCreateDto = EmployeeCreateDto.builder()
-                .withFirstName("John")
-                .withLastName("Doe")
-                .withStartDate(LocalDate.of(2024, 1, 1))
+                .firstName("John")
+                .lastName("Doe")
+                .startDate(LocalDate.of(2024, 1, 1))
                 .build();
 
         mockMvc.perform(post("/api/employees").contextPath(CONTEXT_PATH)

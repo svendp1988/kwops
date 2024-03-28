@@ -11,7 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import pxl.kwops.api.models.ErrorModel;
 import pxl.kwops.devops.boundary.data.TeamJpaRepository;
 import pxl.kwops.devops.boundary.models.DeveloperEntity;
-import pxl.kwops.devops.boundary.models.TeamAssembleInputDto;
+import pxl.kwops.devops.api.model.TeamAssembleInputDto;
 import pxl.kwops.devops.boundary.models.TeamEntity;
 import pxl.kwops.devops.business.DeveloperRepositoryAdapter;
 
@@ -122,8 +122,8 @@ class TeamControllerIT {
     void assembleTeam_noTeamFound() throws Exception {
         var teamId = "07745914-0db6-3595-ae18-eda8c6bf6fc5";
         var teamAssembleInputDto = TeamAssembleInputDto.builder()
-                .withTeamId(teamId)
-                .withRequiredNumberOfDevelopers(3)
+                .teamId(teamId)
+                .requiredNumberOfDevelopers(3)
                 .build();
         var errorMessage = "Could not find team with id: " + teamId;
         var expectedError = new ErrorModel(errorMessage, 400);
@@ -143,8 +143,8 @@ class TeamControllerIT {
     void assembleTeam_teamFound() throws Exception {
         var teamId = "07745914-0db6-3595-ae18-eda8c6bf6fc5";
         var teamAssembleInputDto = TeamAssembleInputDto.builder()
-                .withTeamId(teamId)
-                .withRequiredNumberOfDevelopers(3)
+                .teamId(teamId)
+                .requiredNumberOfDevelopers(3)
                 .build();
 
         when(teamRepositoryMock.findById(UUID.fromString(teamId))).thenReturn(Optional.of(
