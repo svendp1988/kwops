@@ -4,22 +4,33 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import pxl.kwops.humanresources.api.model.AllEmployees;
 import pxl.kwops.humanresources.api.model.EmployeeCreateDto;
 import pxl.kwops.humanresources.api.model.EmployeeDetailsDto;
 import pxl.kwops.humanresources.api.EmployeeControllerApi;
 import pxl.kwops.humanresources.boundary.EmployeeMapper;
 import pxl.kwops.humanresources.business.EmployeeService;
 
-import static org.springframework.http.ResponseEntity.ok;
+import java.util.List;
 
+import static org.springframework.http.ResponseEntity.ok;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/employees")
+//@CrossOrigin(originPatterns = {"http://localhost:*"})
 public class EmployeeController implements EmployeeControllerApi {
 
     private final EmployeeService employeeService;
     private final EmployeeMapper employeeMapper;
+
+    @GetMapping
+    public ResponseEntity<AllEmployees> getAllEmployees() {
+        var allEmployees = AllEmployees.builder()
+                .employees(employeeMapper.toEmployeeDetailsDtoList(employeeService.getAllEmployees()))
+                .build();
+        return ok(allEmployees);
+    }
 
     @GetMapping("/{number}")
     public ResponseEntity<EmployeeDetailsDto> getByNumber(@PathVariable String number) {
@@ -46,3 +57,5 @@ public class EmployeeController implements EmployeeControllerApi {
         return ok().build();
     }
 }
+
+

@@ -9,6 +9,8 @@ import pxl.kwops.humanresources.boundary.models.EmployeeEntity;
 import pxl.kwops.humanresources.domain.Employee;
 import pxl.kwops.humanresources.domain.EmployeeNumber;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface EmployeeMapper {
 
@@ -16,6 +18,8 @@ public interface EmployeeMapper {
 
     @Mapping(target = "number", source = "number", qualifiedByName = "mapFromEmployeeNumber")
     EmployeeDetailsDto toEmployeeDetailsDto(Employee employee);
+
+    List<EmployeeDetailsDto> toEmployeeDetailsDtoList(List<Employee> employees);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "number", source = "number", qualifiedByName = "mapFromEmployeeNumber")

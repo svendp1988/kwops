@@ -8,6 +8,7 @@ import pxl.kwops.message.EmployeeHiredMessage;
 import pxl.kwops.message.MessageSender;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -40,4 +41,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepositoryAdapter.getEmployeeByNumber(number);
     }
 
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeRepositoryAdapter.getAllEmployees();
+    }
 }

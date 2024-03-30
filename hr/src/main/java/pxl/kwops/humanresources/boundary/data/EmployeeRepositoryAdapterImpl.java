@@ -8,6 +8,7 @@ import pxl.kwops.humanresources.domain.Employee;
 import pxl.kwops.humanresources.domain.EmployeeNumber;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -37,5 +38,12 @@ public class EmployeeRepositoryAdapterImpl implements EmployeeRepositoryAdapter 
     @Override
     public void commitTrackedChanges() {
         employeeRepository.flush();
+    }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll().stream()
+                .map(employeeMapper::toEmployee)
+                .toList();
     }
 }

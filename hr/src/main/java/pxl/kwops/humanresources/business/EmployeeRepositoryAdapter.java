@@ -4,6 +4,7 @@ import pxl.kwops.humanresources.domain.Employee;
 import pxl.kwops.humanresources.domain.EmployeeNumber;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeRepositoryAdapter {
@@ -11,4 +12,5 @@ public interface EmployeeRepositoryAdapter {
     Optional<Employee> getEmployeeByNumber(EmployeeNumber number);
     int getNumberOfStartersOnStartTime(LocalDate startTime);
     void commitTrackedChanges();
+    List<Employee> getAllEmployees();
 }

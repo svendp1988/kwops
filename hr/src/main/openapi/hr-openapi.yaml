@@ -26,6 +26,18 @@ paths:
               schema:
                 $ref: "#/components/schemas/EmployeeDetailsDto"
   /employees:
+    get:
+      tags:
+        - employee-controller
+      summary: "GET employees"
+      operationId: "getAllEmployees"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllEmployees"
     post:
       tags:
         - employee-controller
@@ -97,3 +109,10 @@ components:
         startDate:
           type: "string"
           format: "date"
+    AllEmployees:
+      type: "object"
+      properties:
+        employees:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeDetailsDto'
