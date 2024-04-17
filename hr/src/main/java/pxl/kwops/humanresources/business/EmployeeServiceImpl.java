@@ -1,6 +1,7 @@
 package pxl.kwops.humanresources.business;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import pxl.kwops.domain.models.Contracts;
 import pxl.kwops.humanresources.domain.Employee;
 import pxl.kwops.humanresources.domain.EmployeeNumber;
@@ -19,6 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final MessageSender<EmployeeHiredMessage> messageSender;
 
     @Override
+    @Transactional
     public Employee hireNewEmployee(String lastName, String firstName, LocalDate startDate) {
         var numberOfStarters = employeeRepositoryAdapter.getNumberOfStartersOnStartTime(startDate);
         var newEmployee = employeeFactory.createNew(lastName, firstName, startDate, numberOfStarters + 1);
