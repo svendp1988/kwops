@@ -14,6 +14,7 @@ paths:
       operationId: "getByNumber"
       parameters:
         - name: "number"
+          example: "123456"
           in: "path"
           required: true
           schema:
@@ -87,28 +88,37 @@ components:
         id:
           type: "integer"
           format: "int64"
+          example: 1
         number:
           type: "string"
+          example: "123456"
         lastName:
           type: "string"
+          example: "Doe"
         firstName:
           type: "string"
+          example: "John"
         startDate:
           type: "string"
           format: "date"
+          example: "2021-01-01"
         endDate:
           type: "string"
           format: "date"
+          example: "2021-12-31"
     EmployeeCreateDto:
       type: "object"
       properties:
         lastName:
           type: "string"
+          example: "Doe"
         firstName:
           type: "string"
+          example: "John"
         startDate:
           type: "string"
           format: "date"
+          example: "2021-01-01"
     AllEmployees:
       type: "object"
       properties:
