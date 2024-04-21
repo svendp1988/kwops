@@ -10,6 +10,16 @@ kwops:
     routingkey: k.kwops-devops
 
 spring:
+  datasource:
+    url: jdbc:mysql://b4e9xxkxnpu2v96i.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/fii6keqiojtsjgpr
+    username: ojhkivy8fm2bivnf
+    password: y2kdr6ibs4csferf
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
   rabbitmq:
     host: woodpecker.rmq.cloudamqp.com
     port: 5672
