@@ -1,0 +1,31 @@
+server:
+  servlet:
+    context-path: /api
+  port: 8082
+
+kwops:
+  message:
+    topicexchangename: x.kwops
+    queuename: q.devops-register-team
+    routingkey: k.kwops-devops
+
+spring:
+  rabbitmq:
+    host: woodpecker.rmq.cloudamqp.com
+    port: 5672
+    username: uphomszs
+    password: SCWM9Il4GJuGcS9LxGxmKvrfXoBIHSxS
+    virtual-host: uphomszs
+    listener:
+      simple:
+        default-requeue-rejected: false
+        acknowledge-mode: manual
+        concurrency: 1
+        max-concurrency: 1
+        prefetch: 1
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 1000
+          max-interval: 10000
+          multiplier: 2

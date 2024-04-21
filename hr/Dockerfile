@@ -2,8 +2,8 @@ FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
-COPY hr/build/libs/hr-0.0.1-SNAPSHOT.jar /app/hr.jar
+COPY ./build/libs/hr-0.0.1-SNAPSHOT.jar /app/hr.jar
 
-EXPOSE 8081
+EXPOSE 8083
 
-CMD ["java", "-jar", "hr.jar"]
+CMD ["java", "-jar", "hr.jar", "-server.port=$PORT"]
